@@ -46,4 +46,21 @@ export default defineConfig({
     host: pkg.debug.env.VITE_DEV_SERVER_HOSTNAME,
     port: pkg.debug.env.VITE_DEV_SERVER_PORT,
   } : undefined,
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src')
+    }
+  },
+  css: {
+    preprocessorOptions: {
+      less: {
+        modifyVars: {
+          'arcoblue-6': '10,251,153',
+        },
+        javascriptEnabled: true,
+      }
+    }
+  },
+
+
 })
