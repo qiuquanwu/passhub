@@ -4,11 +4,11 @@
       <div class="container">
         <!-- <div class="demo-flex-spacer"></div> -->
 
-        <a-space>
+        <a-space style="width: 400px">
           <a-button type="text" shape="circle" @click="goBack">
             <icon-arrow-left />
           </a-button>
-          <h1>注册</h1>
+          <h1>添加用户</h1>
         </a-space>
 
         <div class="webflow-style-input">
@@ -199,8 +199,8 @@ a.demo {
 .webflow-style-input input {
   flex-grow: 1;
   color: @input-text-active;
-  font-size: 1.8rem;
-  line-height: 2.4rem;
+  font-size: 1.5rem;
+  line-height: 2rem;
   vertical-align: middle;
   &::-webkit-input-placeholder {
     color: @input-text-inactive;

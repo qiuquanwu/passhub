@@ -5,8 +5,14 @@
     <a-row class="grid-demo">
       <a-col :span="6">
         <div class="list-box">
+          <div class="user_info">
+            <a-avatar :style="{ backgroundColor: '#3370ff' }">
+              <IconUser />
+            </a-avatar>
+            <div style="padding-top: 0.5rem">{{ user.nickname }}</div>
+          </div>
           <a-menu
-            :style="{ width: '200px', borderRadius: '4px' }"
+            :style="{ borderRadius: '4px' }"
             theme="light"
             :collapsed="collapsed"
             :default-open-keys="['0']"
@@ -35,7 +41,7 @@
                 <icon-settings />
               </a-button>
             </a-tooltip>
-            <a-tooltip content="添加用户组">
+            <a-tooltip content="添加组">
               <a-button type="text" @click="openAddModal" :size="btnSize">
                 <icon-plus />
               </a-button>
@@ -53,11 +59,11 @@
               </a-tooltip>
             </a-popconfirm>
 
-            <a-tooltip content="注销账号">
+            <!-- <a-tooltip content="注销账号">
               <a-button type="text" :size="btnSize" @click="handleClickWarning">
                 <icon-delete />
               </a-button>
-            </a-tooltip>
+            </a-tooltip> -->
           </a-space>
         </div>
       </a-col>
@@ -69,8 +75,19 @@
             </template>
           </a-input>
         </div>
+        <div class="logout-box">
+          <a-space align="center">
+            <a-tooltip content="添加数据">
+              <a-button type="text" @click="openAddModal" :size="btnSize">
+                <icon-plus />
+              </a-button>
+            </a-tooltip>
+          </a-space>
+        </div>
       </a-col>
-      <a-col :span="12"> 内容3 </a-col>
+      <a-col :span="12">
+        <div class="content">内容3</div>
+      </a-col>
     </a-row>
 
     <AddModalVue v-model:visible="visible" />
@@ -84,8 +101,13 @@ import { Modal } from "@arco-design/web-vue";
 import { ref } from "vue";
 import AddModalVue from "./AddModal.vue";
 import SettingModal from "./SettingModal.vue";
+import { useLocalStorage } from "@vueuse/core";
+const user = useLocalStorage<any>("user", {});
+
+console.log(user.value);
 const { go } = useGo();
 const logout = () => {
+  localStorage.removeItem("user");
   go({
     name: "Login",
   });
@@ -112,6 +134,8 @@ const handleClickWarning = () => {
   Modal.warning({
     title: "你是否注销该账号？",
     content: "注销账号后，该账号所有数据将会删除！",
+    hideCancel: false,
+    titleAlign: "start",
     onOk() {
       console.log("删除用户！");
       go({
@@ -135,11 +159,31 @@ const handleClickWarning = () => {
   padding: 1rem 0;
   background-color: white;
   width: 25%;
+  border-right: 1px solid #ddd;
 }
 .list-box {
   padding: 1rem;
   max-height: 100vh;
   overflow: auto;
   padding-bottom: 5rem;
+  border-right: 1px solid #ddd;
+  border-top: 1px solid #ddd;
+  height: 100vh;
+}
+
+.content {
+  padding: 1rem;
+  height: 100vh;
+  border-top: 1px solid #ddd;
+  overflow: auto;
+}
+
+.user_info {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
 }
 </style>

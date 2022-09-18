@@ -123,6 +123,7 @@ const handleSubmit = async () => {
     console.log(res);
 
     if (res.code == 200) {
+      localStorage.setItem("user", JSON.stringify(res.data));
       go({
         name: "Home",
       });
@@ -237,8 +238,8 @@ a.demo {
 .webflow-style-input input {
   flex-grow: 1;
   color: @input-text-active;
-  font-size: 1.8rem;
-  line-height: 2.4rem;
+  font-size: 1.5rem;
+  line-height: 2rem;
   vertical-align: middle;
   &::-webkit-input-placeholder {
     color: @input-text-inactive;
