@@ -62,4 +62,9 @@ const handle = (icon: string) => {
 };
 </script>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+.icon_box {
+  max-height: 50vh;
+  overflow: auto;
+}
+</style>
