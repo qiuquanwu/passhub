@@ -13,6 +13,7 @@
           </div>
           <a-menu :style="{ borderRadius: '4px' }" theme="light" :collapsed="collapsed"
             v-model:selected-keys="selectedKey" :default-selected-keys="selectedKey">
+            <a-empty v-if="groups.length==0" />
             <a-menu-item v-for="group of groups" :key="group.id">
               <!-- <icon-qq-circle-fill /> -->
               <a-row>
@@ -73,6 +74,9 @@
               <icon-search />
             </template>
           </a-input>
+          <div>
+            <a-empty v-if="items.length==0" />
+          </div>
         </div>
         <div class="logout-box">
           <a-space align="center">
@@ -148,6 +152,7 @@ const handleClickWarning = () => {
 
 
 const groups = ref<any[]>([])
+const items = ref<any[]>([])
 const selectedKey = ref<any[]>([])
 const getGroup = async (userId: number) => {
   const res = await viewGroup({
