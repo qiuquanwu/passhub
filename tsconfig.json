@@ -10,19 +10,19 @@
     "sourceMap": true,
     "baseUrl": "./",
     "strict": true,
-    "paths": {},
     "allowSyntheticDefaultImports": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ],
+    },
   },
   // "include": ["src"],
   "references": [
     { "path": "./tsconfig.node.json" }
   ],
-	"paths": {
-    "@/*": [
-      "./src/*"
-    ]
-  },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "./**/*.ts"],
+
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "./**/*.ts","electron/**/*.ts"],
 	"exclude": ["/dist/**"]
 }

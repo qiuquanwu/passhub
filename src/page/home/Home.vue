@@ -11,27 +11,30 @@
             </a-avatar>
             <div style="padding-top: 0.5rem">{{ user.nickname }}</div>
           </div>
-          <a-menu
-            :style="{ borderRadius: '4px' }"
-            theme="light"
-            :collapsed="collapsed"
-            :default-open-keys="['0']"
-            :default-selected-keys="['0_2']"
-          >
-            <a-menu-item key="0_0">
+          <a-menu :style="{ borderRadius: '4px' }" theme="light" :collapsed="collapsed"
+            v-model:selected-keys="selectedKey" :default-selected-keys="selectedKey">
+            <a-menu-item v-for="group of groups" :key="group.id">
               <!-- <icon-qq-circle-fill /> -->
-              <component is="icon-qq-circle-fill"></component>
-              QQ账号
+              <a-row>
+                <a-col :span="4">
+                  <component :is="group.icon"></component>
+                </a-col>
+                <a-col :span="12">
+                  {{group.name}}
+                </a-col>
+                <a-col :span="4" v-if="selectedKey.includes(group.id)">
+                  <icon-edit />
+                </a-col>
+                <a-col :span="4" v-if="selectedKey.includes(group.id)">
+                  <a-popconfirm content="是否删除该账号组?">
+                    <icon-delete />
+                  </a-popconfirm>
+                </a-col>
+
+              </a-row>
+
             </a-menu-item>
-            <a-menu-item key="0_1">
-              <icon-qq-circle-fill /> 微信账号
-            </a-menu-item>
-            <a-menu-item key="0_2">
-              <icon-qq-circle-fill /> 游戏账号
-            </a-menu-item>
-            <a-menu-item key="0_3">
-              <icon-qq-circle-fill /> QQ账号
-            </a-menu-item>
+
           </a-menu>
         </div>
         <div class="logout-box">
@@ -47,11 +50,7 @@
               </a-button>
             </a-tooltip>
 
-            <a-popconfirm
-              content="你确认退出登录？"
-              @ok="logout"
-              title="退出账号"
-            >
+            <a-popconfirm content="你确认退出登录？" @ok="logout" title="退出账号">
               <a-tooltip content="退出">
                 <a-button type="text" :size="btnSize">
                   <icon-export />
@@ -90,7 +89,7 @@
       </a-col>
     </a-row>
 
-    <AddModalVue v-model:visible="visible" />
+    <AddModalVue v-model:visible="visible" @handle-complate="handleComplate" />
     <SettingModal v-model:visible="setVisible" />
   </div>
 </template>
@@ -98,10 +97,11 @@
 <script setup lang="ts">
 import useGo from "@/hooks/useGo";
 import { Modal } from "@arco-design/web-vue";
-import { ref } from "vue";
+import { ref, watchEffect } from "vue";
 import AddModalVue from "./AddModal.vue";
 import SettingModal from "./SettingModal.vue";
 import { useLocalStorage } from "@vueuse/core";
+import { viewGroup } from "@/api";
 const user = useLocalStorage<any>("user", {});
 
 console.log(user.value);
@@ -144,6 +144,31 @@ const handleClickWarning = () => {
     },
   });
 };
+
+
+
+const groups = ref<any[]>([])
+const selectedKey = ref<any[]>([])
+const getGroup = async (userId: number) => {
+  const res = await viewGroup({
+    userId: userId
+  })
+
+  console.log('所有的权限组', res)
+
+  groups.value = res.data
+  selectedKey.value = res.data.length > 0 ? [res.data[0]] : []
+}
+watchEffect(async () => {
+  getGroup(user.value.id)
+})
+
+
+
+const handleComplate = () => {
+  visible.value = false
+  getGroup(user.value.id)
+}
 </script>
 
 <style scoped lang="less">
@@ -161,6 +186,7 @@ const handleClickWarning = () => {
   width: 25%;
   border-right: 1px solid #ddd;
 }
+
 .list-box {
   padding: 1rem;
   max-height: 100vh;

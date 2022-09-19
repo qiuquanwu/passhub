@@ -16,4 +16,35 @@ model User {
     nickname String?
     avatar   String?
     slat     String?
+    Group    Group[]
+}
+
+model Group {
+    id        Int      @id @default(autoincrement())
+    userId    Int
+    user      User     @relation(fields: [userId], references: [id])
+    name      String   @unique
+    icon      String
+    Item      Item[]
+    updatedAt DateTime @updatedAt
+}
+
+model Item {
+    id        Int       @id @default(autoincrement())
+    name      String    @unique
+    remarks   String
+    groupId   Int
+    group     Group     @relation(fields: [groupId], references: [id])
+    Content   Content[]
+    updatedAt DateTime  @updatedAt
+}
+
+model Content {
+    id        Int      @id @default(autoincrement())
+    name      String   @unique
+    value     String
+    type      Int
+    itemId    Int
+    item      Item     @relation(fields: [itemId], references: [id])
+    updatedAt DateTime @updatedAt
 }

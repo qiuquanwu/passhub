@@ -37,10 +37,14 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from "vue";
+import { reactive, ref, toRaw } from "vue";
 // const itemName = ref("");
 import IconSelectVue from "@/components/IconSelect.vue";
+import { useLocalStorage } from "@vueuse/core";
+import { addGroup } from "@/api";
 const formRef = ref<any>(null);
+
+  const user = useLocalStorage<any>("user", {});
 const handleOk = () => {
   console.log("handleOk");
 };
@@ -51,8 +55,8 @@ const form = reactive({
 const handleCancel = () => {
   console.log("handleCancel");
 };
-
-const handleBeforeOk = (done: any) => {
+const emits = defineEmits(['handleComplate'])
+const handleBeforeOk =async (done: any) => {
   console.log(form);
 
   if (form.name === "") {
@@ -73,7 +77,15 @@ const handleBeforeOk = (done: any) => {
     });
     done();
   }
+
+  const res = await addGroup({
+    ...toRaw(form),
+    userId:user.value.id
+  })
+  console.log(res);
+  done();
   //保存账号组
+  emits('handleComplate')
 };
 </script>
 
