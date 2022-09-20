@@ -7,7 +7,7 @@
     @before-ok="handleBeforeOk"
   >
     <template #title>
-      <span>添加账号组 </span>
+      <span>修改 </span>
     </template>
     <div>
       <a-form :model="form" ref="formRef">
@@ -37,21 +37,38 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref, toRaw } from "vue";
+import { reactive, ref, toRaw, watchEffect } from "vue";
 // const itemName = ref("");
 import IconSelectVue from "@/components/IconSelect.vue";
 import { useLocalStorage } from "@vueuse/core";
-import { addGroup } from "@/api";
+import { addGroup, updateGroup } from "@/api";
+import { Group } from "@prisma/client";
 const formRef = ref<any>(null);
 
 const user = useLocalStorage<any>("user", {});
+
+interface Props{
+  group:Group|null
+}
+const props  = defineProps<Props>()
+
 const handleOk = () => {
   console.log("handleOk");
 };
+
+
 const form = reactive({
+  id:0,
   name: "",
-  icon: "icon-qq-circle-fill",
+  icon: "",
 });
+watchEffect(()=>{
+  if(props.group){
+    form.name=props.group.name
+    form.icon=props.group.icon
+    form.id=props.group.id
+  }
+})
 const handleCancel = () => {
   console.log("handleCancel");
 };
@@ -78,14 +95,9 @@ const handleBeforeOk = async (done: any) => {
     done();
   }
 
-  const res = await addGroup({
-    ...toRaw(form),
-    userId: user.value.id,
-  });
+  const res = await updateGroup(toRaw(form));
   console.log(res);
   done();
-  //保存账号组
-  form.name = "";
   emits("handleComplate");
 };
 </script>

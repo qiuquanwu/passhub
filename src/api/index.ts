@@ -13,6 +13,12 @@ export const doRegister = (data:any) => {
 export const addGroup = (data:any) => {
     return request("addGroup", data);
 }
+export const delGroup = (data:any) => {
+    return request("delGroup", data);
+}
 export const viewGroup = (data:any) => {
     return request("viewGroup", data);
+}
+export const updateGroup = (data:any) => {
+    return request("updateGroup", data);
 }

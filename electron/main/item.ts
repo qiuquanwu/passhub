@@ -4,18 +4,18 @@ import Result from "./result"
 
 const prisma = new PrismaClient()
 
-export const addGroup = async (e, options) => {
+export const addItem = async (e, options) => {
     // console.log('参数', options);
     //验证登录
-   const res = await prisma.group.create({
+   const res = await prisma.item.create({
     data:options
    })
    return Result.ok(res)
 }
-export const delGroup = async (e, options) => {
+export const delItem = async (e, options) => {
     // console.log('参数', options);
     //验证登录
-   const res = await prisma.group.delete({
+   const res = await prisma.item.delete({
     where:{
         id:options.id
     }
@@ -26,12 +26,12 @@ export const delGroup = async (e, options) => {
 }
 
 
-export const viewGroup = async (e, options) => {
+export const viewItem = async (e, options) => {
     // console.log('参数', options);
     //验证登录
-   const res = await prisma.group.findMany({
+   const res = await prisma.item.findMany({
     where:{
-        userId:options.userId
+        groupId:options.groupId
     }
    })
 
@@ -39,10 +39,10 @@ export const viewGroup = async (e, options) => {
 
 }
 
-export const updateGroup = async (e, options) => {
+export const updateItem = async (e, options) => {
     // console.log('参数', options);
     //验证登录
-   const res = await prisma.group.update({
+   const res = await prisma.item.update({
     where:{
         id:options.id
     },
@@ -54,10 +54,10 @@ export const updateGroup = async (e, options) => {
 }
 
 
-// export const delGroup = async (e, options) => {
+// export const delItem = async (e, options) => {
 //     // console.log('参数', options);
 //     //验证登录
-//    const res = await prisma.group.delete({
+//    const res = await prisma.item.delete({
 //     where:{
 //         id:options.id
 //     }
