@@ -103,8 +103,8 @@
       </a-col>
     </a-row>
 
-    <AddModalVue v-model:visible="visible" @handle-complate="handleComplate" />
-    <EditModalVue v-model:visible="editVisible" @handle-complate="handleComplate" :group="group"/>
+    <AddModalVue v-model:visible="visible" @handle-complete="handleComplete" />
+    <EditModalVue v-model:visible="editVisible" @handle-complete="handleComplete" :group="group"/>
     <SettingModal v-model:visible="setVisible" />
   </div>
 </template>
@@ -197,7 +197,7 @@ watchEffect(async () => {
   getGroup(user.value.id);
 });
 
-const handleComplate = () => {
+const handleComplete = () => {
   visible.value = false;
   editVisible.value = false;
   getGroup(user.value.id);

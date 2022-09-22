@@ -24,3 +24,4 @@ dist-ssr
 release
 .vscode/.debug.env
 package-lock.json
+electron/prisma/dev.db

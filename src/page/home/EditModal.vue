@@ -72,7 +72,7 @@ watchEffect(()=>{
 const handleCancel = () => {
   console.log("handleCancel");
 };
-const emits = defineEmits(["handleComplate"]);
+const emits = defineEmits(["handleComplete"]);
 const handleBeforeOk = async (done: any) => {
   console.log(form);
 
@@ -98,7 +98,7 @@ const handleBeforeOk = async (done: any) => {
   const res = await updateGroup(toRaw(form));
   console.log(res);
   done();
-  emits("handleComplate");
+  emits("handleComplete");
 };
 </script>
 

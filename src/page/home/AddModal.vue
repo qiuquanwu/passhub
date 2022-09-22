@@ -55,7 +55,7 @@ const form = reactive({
 const handleCancel = () => {
   console.log("handleCancel");
 };
-const emits = defineEmits(["handleComplate"]);
+const emits = defineEmits(["handleComplete"]);
 const handleBeforeOk = async (done: any) => {
   console.log(form);
 
@@ -86,7 +86,7 @@ const handleBeforeOk = async (done: any) => {
   done();
   //保存账号组
   form.name = "";
-  emits("handleComplate");
+  emits("handleComplete");
 };
 </script>
 
