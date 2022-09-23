@@ -91,7 +91,7 @@
         <div class="logout-box">
           <a-space align="center">
             <a-tooltip content="添加数据">
-              <a-button type="text" @click="openAddModal" :size="btnSize">
+              <a-button type="text" @click="openAddItemVue" :size="btnSize">
                 <icon-plus />
               </a-button>
             </a-tooltip>
@@ -102,10 +102,14 @@
         <div class="content">内容3</div>
       </a-col>
     </a-row>
-
+    <!-- 添加组 -->
     <AddModalVue v-model:visible="visible" @handle-complete="handleComplete" />
+    <!-- 编辑组 -->
     <EditModalVue v-model:visible="editVisible" @handle-complete="handleComplete" :group="group"/>
+    <!-- 设置弹窗 -->
     <SettingModal v-model:visible="setVisible" />
+    <!-- 添加item -->
+    <AddItemVue  v-model:visible="addItemVueVisible"/>
   </div>
 </template>
 
@@ -116,6 +120,7 @@ import { ref, watchEffect } from "vue";
 import AddModalVue from "./AddModal.vue";
 import EditModalVue from "./EditModal.vue";
 import SettingModal from "./SettingModal.vue";
+import AddItemVue from "./AddItem.vue";
 import { useLocalStorage } from "@vueuse/core";
 import { delGroup, viewGroup } from "@/api";
 import message from "@arco-design/web-vue/es/message";
@@ -202,6 +207,17 @@ const handleComplete = () => {
   editVisible.value = false;
   getGroup(user.value.id);
 };
+
+
+
+const addItemVueVisible = ref(false)
+
+
+const openAddItemVue =()=>{
+  console.log(selectedKey.value)
+  addItemVueVisible.value = true;
+}
+
 </script>
 
 <style scoped lang="less">
