@@ -22,3 +22,16 @@ export const viewGroup = (data:any) => {
 export const updateGroup = (data:any) => {
     return request("updateGroup", data);
 }
+
+export const addItem = (data:any) => {
+    return request("addItem", data);
+}
+export const delItem = (data:any) => {
+    return request("delItem", data);
+}
+export const updateItem = (data:any) => {
+    return request("updateItem", data);
+}
+export const viewItem = (data:any) => {
+    return request("viewItem", data);
+}

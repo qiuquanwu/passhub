@@ -14,8 +14,10 @@ const handleIPC = () => {
     ipcMain.handle('delGroup', delGroup)
     ipcMain.handle('viewGroup', viewGroup)
     ipcMain.handle('updateGroup', updateGroup)
-
-
+    ipcMain.handle('addItem', addItem)
+    ipcMain.handle('delItem', delItem)
+    ipcMain.handle('updateItem', updateItem)
+    ipcMain.handle('viewItem', viewItem)
 }
 
 
