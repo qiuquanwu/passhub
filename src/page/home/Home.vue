@@ -1,7 +1,5 @@
 <template>
   <div class="page">
-    <div></div>
-
     <a-row class="grid-demo">
       <a-col :span="6">
         <div class="list-box">
@@ -68,7 +66,7 @@
       <a-col :span="6">
         <div class="list-box">
           <div style="padding:4px 8px">
-            <a-input placeholder="请输入搜索内容" allow-clear>
+            <a-input placeholder="请输入搜索内容" allow-clear v-model="searchText" @blur="search" @press-enter="search">
               <template #suffix>
                 <icon-search />
               </template>
@@ -78,7 +76,7 @@
           <div>
             <a-menu :style="{ borderRadius: '4px' }" theme="light" :collapsed="collapsed"
               v-model:selected-keys="itemKeys" :default-selected-keys="itemKeys">
-              <a-empty v-if="groups.length == 0" />
+              <a-empty v-if="items.length == 0" />
               <a-menu-item v-for="item of items" :key="item.id">
                 <!-- <icon-qq-circle-fill /> -->
                 <a-row>
@@ -127,7 +125,7 @@
 <script setup lang="ts">
 import useGo from "@/hooks/useGo";
 import { Modal } from "@arco-design/web-vue";
-import { computed, ref, watchEffect } from "vue";
+import { computed, ref, unref, watchEffect, nextTick } from "vue";
 import AddModalVue from "./AddModal.vue";
 import EditModalVue from "./EditModal.vue";
 import SettingModal from "./SettingModal.vue";
@@ -136,7 +134,6 @@ import EditItemVue from "./EditItem.vue";
 import { useLocalStorage } from "@vueuse/core";
 import { delGroup, delItem, viewGroup, viewItem } from "@/api";
 import message from "@arco-design/web-vue/es/message";
-import { nextTick } from "process";
 const user = useLocalStorage<any>("user", {});
 
 console.log(user.value);
@@ -280,6 +277,19 @@ const handleEditItem = (data: any) => {
 const onEditItem = () => {
   editItemVisible.value = false;
   getItem()
+}
+
+/**搜索功能 */
+const searchText = ref('')
+const search = () => {
+  const text = searchText.value
+  if (text !== '') {
+    items.value = items.value.filter((item) => {
+      return item.name.indexOf(text) > -1;
+    })
+  } else {
+    getItem()
+  }
 }
 /**内容区 */
 </script>
