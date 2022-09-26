@@ -105,7 +105,42 @@
         </div>
       </a-col>
       <a-col :span="12">
-        <div class="content">内容3</div>
+        <div class="content">
+
+          <div class="box">
+            <!-- <a-empty v-if="contents.length==0"></a-empty> -->
+            <a-typography>
+              <a-typography-title :heading="3" type="primary">
+                游戏账号
+              </a-typography-title>
+            </a-typography>
+            <a-typography>
+              <a-typography-text type="secondary">
+                描述
+              </a-typography-text>
+            </a-typography>
+            <div class="item">
+              <a-space warp>
+                <a-typography-paragraph>
+                  <a-tag color="arcoblue">游戏账号</a-tag>
+                </a-typography-paragraph>
+                <a-typography-paragraph copyable editable>
+                  9194032559194032559194。032559194032559194032559194。03255919403255919403255
+                </a-typography-paragraph>
+              </a-space>
+            </div>
+            <div>
+              <a-space warp>
+                <a-typography-paragraph>
+                  <a-tag color="arcoblue">密码</a-tag>
+                </a-typography-paragraph>
+                <a-typography-paragraph copyable editable>
+                  *********
+                </a-typography-paragraph>
+              </a-space>
+            </div>
+          </div>
+        </div>
       </a-col>
     </a-row>
     <!-- 添加组 -->
@@ -134,6 +169,7 @@ import EditItemVue from "./EditItem.vue";
 import { useLocalStorage } from "@vueuse/core";
 import { delGroup, delItem, viewGroup, viewItem } from "@/api";
 import message from "@arco-design/web-vue/es/message";
+import { Content } from "@prisma/client";
 const user = useLocalStorage<any>("user", {});
 
 console.log(user.value);
@@ -292,9 +328,45 @@ const search = () => {
   }
 }
 /**内容区 */
+const ellipsis = {
+  rows: 1,
+  expandable: true,
+}
+
+const contents = ref<Partial<Content>[]>([])
 </script>
 
 <style scoped lang="less">
+.content {
+  display: flex;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  .box {
+    width: 80%;
+    height: 70%;
+    // border: 1px solid black;
+    box-shadow: 3px 3px 11px 1px rgb(0 0 0 / 8%);
+    // border: 2px solid;
+    flex-direction: column;
+    // border-radius: 10px;
+    // border-image-source: linear-gradient(to right, #8f41e9, #578aef);
+    // border-image-slice: 1;
+    display: flex;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+
+    .item {
+      max-width: 50%;
+    }
+  }
+}
+
 .logout-box {
   position: fixed;
   bottom: 0;
